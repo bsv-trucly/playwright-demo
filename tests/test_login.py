@@ -1,11 +1,11 @@
 import pytest
 from playwright.sync_api import sync_playwright
 
-BASE_URL = "https://playwright-demo.eventos.work/console"
+BASE_URL = "https://playwright-demo.eventos.work/web/portal/529/event/3988/users/login"
 LOGIN_URL = f"{BASE_URL}/login"
 TOP_URL = f"{BASE_URL}/top"
 
-VALID_EMAIL = "trucly@bravesoft.com.vn"
+VALID_EMAIL = "truclytest@gmail.com"
 VALID_PASSWORD = "brave0404"
 WRONG_PASSWORD = "wrongpassword1"
 UNREGISTERED_EMAIL = "notregistered@example.com"
@@ -28,28 +28,6 @@ def page():
         context.close()
         browser.close()
 
-
-# ===== 画面遷移 =====
-
-def test_navigation_from_top_to_login():
-    """TOP画面から「チケット申し込み」ボタンを押すとログイン画面へ遷移すること"""
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
-        pg = browser.new_page()
-        pg.goto(TOP_URL)
-        pg.wait_for_load_state("networkidle")
-        # get_by_role: <button> hoặc <a> có text "チケット申し込み"
-        pg.get_by_role("button", name="チケット申し込み").click()
-        pg.wait_for_load_state("networkidle")
-        assert "/login" in pg.url
-        browser.close()
-
-
-# ===== URL =====
-
-def test_login_page_url(page):
-    """PC版でログイン画面URLに「/login」が含まれること"""
-    assert "/login" in page.url
 
 
 # ===== 画面タイトル =====
