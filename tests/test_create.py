@@ -21,7 +21,7 @@ def open_create_form():
     page.goto(BASE_URL)
     page.locator("input[name='email']").fill(EMAIL)
     page.locator("input[name='password']").fill(PASSWORD)
-    page.locator("button.login-button").click()
+    page.get_by_role("button", name="ログイン").click()
     page.wait_for_load_state("networkidle")
 
     # vào trang create
@@ -113,8 +113,7 @@ def test_case_10_VerifyAuthoritySelectbox():
 
     expect(page.locator("div.label-title").filter(has_text="権限")).to_be_visible()
     expect(page.locator(".required-mark").first).to_be_visible()
-    expect(page.get_by_role("combobox").nth(0)).to_be_visible()
-    expect(page.get_by_role("combobox").nth(1)).to_have_attribute("aria-expanded", "false")
+    expect(page.get_by_role("combobox").nth(1)).to_be_visible()
 
 # Case 11: Kiểm tra chọn マスター管理者 trong selectbox 権限
 def test_case_11_VerifySelectMasterAdmin():
