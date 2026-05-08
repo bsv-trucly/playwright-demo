@@ -29,7 +29,7 @@ def open_create_form():
     page.wait_for_load_state("networkidle")
 
     # click button 新規追加
-    page.locator("button.common-submit-btn").click()
+    page.get_by_role("button", name="新規追加").click()
 
     return page, browser, p
 
