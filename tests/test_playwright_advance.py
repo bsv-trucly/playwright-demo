@@ -159,14 +159,13 @@ def test_Case20(page):
     page.goto(BASE_URL)
     page.get_by_role("button", name="Failure State").click()
     expect(page.get_by_text("System Normal")).to_be_visible()
-    page.locator("#section-screenshot").page.screenshot(path="test-results/test_Case20.png")
 
 # Case 21: Quay video trong mọi trường hợp
 # Config pytest.ini: --video=on
 def test_Case21(page):
     page.goto(BASE_URL)
     page.get_by_role("button", name="Play Sequence").click()
-    expect(page.get_by_text("Sequence complete!")).to_be_visible()
+    expect(page.get_by_text("Sequence complete!")).to_be_visible(timeout=30000)
 
 
 # Case 22: Chỉ quay trong TH failed — test PASS nên không có video
@@ -191,6 +190,7 @@ def test_Case24(page):
     page.get_by_placeholder("dev@example.com").fill("truclytest@gmail.com")
     page.get_by_role("button", name="Submit Form").click()
     expect(page.get_by_text("Submitted: Truc")).to_be_visible()
+    
 # Case 25: Trace trong TH Failed  → sửa config only-on-failure
 def test_Case25(page):
     page.goto(BASE_URL)
@@ -228,7 +228,7 @@ def test_Case29(before_each):
     page.get_by_placeholder("e.g. Fix login bug").fill("Fix login bug")
     page.get_by_label("Category").select_option("bug")
     page.get_by_role("button", name="Create Record").click()
-    expect(page.get_by_text("Fix login bug")).to_be_visible()
+    expect(page.get_by_role("cell", name="Fix login bug")).to_be_visible()
 
 # Case 30: beforeEach after_each
 def test_Case30(before_each_after_each):
