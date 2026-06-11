@@ -4,21 +4,31 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
       with:
-        node-version: lts/*
+        python-version: '3.11'
+
     - name: Install dependencies
-      run: npm ci
+      run: |
+        pip install pytest
+        pip install pytest-playwright
+        pip install pytest-html
+
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npx playwright test
+      run: playwright install --with-deps chromium
+
+    - name: Run Pytest tests
+      run: pytest tests/test_playwright_advance.py --browser chromium
+
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
